@@ -1,0 +1,9 @@
+// TODO add this once Flogger has the PlatformProvider "module already exists in another package" issue fixed
+module carambola.flogger {
+
+    requires carambola.core;
+
+    requires flogger;
+    requires flogger.system.backend;
+    requires java.logging;
+}

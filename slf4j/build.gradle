@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'java-library'
+    id "com.dua3.gradle.jpms" version "0.8.2"
+}
+
+apply plugin: 'com.dua3.gradle.jpms'
+
+dependencies {
+    implementation project(':carambola-core')
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+}
