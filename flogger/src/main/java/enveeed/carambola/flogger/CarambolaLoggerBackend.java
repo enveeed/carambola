@@ -44,17 +44,19 @@ public final class CarambolaLoggerBackend extends LoggerBackend {
 
     @Override
     public boolean isLoggable(Level lvl) {
-        return true;
+        return this.carambola
+                .getConfiguration().isLevelEffective(lvl.intValue());
     }
 
     @Override
     public void log(LogData data) {
-        System.out.println("CARAMBOLAAAA "+data.toString());
+        this.carambola
+                .log(FloggerStatement.of(data));
     }
 
     @Override
     public void handleError(RuntimeException error, LogData badData) {
-
+        // TODO ERR
     }
 
 }

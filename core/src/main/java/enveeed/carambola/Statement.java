@@ -17,5 +17,26 @@
 
 package enveeed.carambola;
 
+import java.time.Instant;
+import java.util.Optional;
+
 public interface Statement {
+
+    Instant getTimestamp();
+
+    String getContent();
+
+    // ===
+
+    int getLevel();
+
+    //
+
+    default Optional<Throwable> getCause() {
+        return Optional.empty();
+    }
+
+    default Optional<Site> getSite() {
+        return Optional.empty();
+    }
 }

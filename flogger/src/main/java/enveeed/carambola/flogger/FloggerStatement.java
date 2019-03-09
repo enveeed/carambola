@@ -17,8 +17,14 @@
 
 package enveeed.carambola.flogger;
 
+import com.google.common.flogger.LogContext;
+import com.google.common.flogger.LogSite;
 import com.google.common.flogger.backend.LogData;
+import enveeed.carambola.Site;
 import enveeed.carambola.Statement;
+
+import java.time.Instant;
+import java.util.Optional;
 
 public final class FloggerStatement implements Statement {
 
@@ -34,5 +40,49 @@ public final class FloggerStatement implements Statement {
 
     public static FloggerStatement of(LogData data) {
         return new FloggerStatement(data);
+    }
+
+    // ===
+
+    @Override
+    public Instant getTimestamp() {
+        return Instant.ofEpochMilli((long) (data.getTimestampNanos() / 1e6));
+    }
+
+    @Override
+    public String getContent() {
+
+        String content;
+
+        if(this.data.getTemplateContext() == null) {
+            content = String.format("%s", this.data.getLiteralArgument());
+        }
+        else {
+            content = String.format(this.data.getTemplateContext().getMessage(), this.data.getArguments());
+        }
+
+        return content;
+    }
+
+    // ===
+
+    @Override
+    public int getLevel() {
+        return this.data.getLevel().intValue();
+    }
+
+    //
+
+    @Override
+    public Optional<Throwable> getCause() {
+        Throwable cause = this.data.getMetadata().findValue(LogContext.Key.LOG_CAUSE);
+        return Optional.ofNullable(cause);
+    }
+
+    @Override
+    public Optional<Site> getSite() {
+        LogSite site = this.data.getLogSite();
+        if(site == LogSite.INVALID) return Optional.empty();
+        else return Optional.of(new Site(site.getClassName(), site.getMethodName(), site.getLineNumber()));
     }
 }

@@ -36,13 +36,25 @@ public final class Carambola {
 
     private final HandlerRegistry handlers = new HandlerRegistry();
 
+    private final CarambolaConfiguration configuration = new CarambolaConfiguration();
+
     // ===
 
-    public void log(Statement statement) {}
+    public void log(Statement statement) {
+
+        // TODO this is only temporary, use handlers
+
+        System.out.println(statement.getContent());
+        statement.getCause().ifPresent(throwable -> throwable.printStackTrace(System.err));
+    }
 
     // ===
 
     public HandlerRegistry getHandlers() {
         return this.handlers;
+    }
+
+    public CarambolaConfiguration getConfiguration() {
+        return this.configuration;
     }
 }

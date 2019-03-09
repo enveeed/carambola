@@ -14,6 +14,12 @@ carambola provides implementations for the following logging APIs or facades:
 
 | API | Module | Notes |
 | --- | --- | --- |
-| [Flogger](https://github.com/google/flogger) | `carambola-flogger` |   |
-| [SLF4J](https://slf4j.org) | `carambola-slf4j` | Includes support for both pre-`1.8` APIs and `1.8+` APIs |
+| [Flogger][ref_flogger] | `carambola-flogger` |   |
+| [SLF4J][ref_slf4j] | `carambola-slf4j` | Includes support for both pre-`1.8` APIs and `1.8+` APIs |
+| [JUL][ref_jul] | `carambola-jul` | Does not automatically enable, needs to be set via system property (see docs)|
+
+
+[ref_flogger]: https://github.com/google/flogger
+[ref_slf4j]: https://slf4j.org
+[ref_jul]: https://docs.oracle.com/en/java/javase/11/docs/api/java.logging/java/util/logging/LogManager.html
 

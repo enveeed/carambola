@@ -18,6 +18,7 @@
 package enveeed.carambola.slf4j;
 
 import enveeed.carambola.Carambola;
+import org.slf4j.event.Level;
 import org.slf4j.helpers.MarkerIgnoringBase;
 
 public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
@@ -35,151 +36,156 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isTraceEnabled() {
-        return false;
+        return carambola.getConfiguration()
+                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.TRACE));
     }
 
     @Override
     public void trace(String msg) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.TRACE, msg, null));
     }
 
     @Override
     public void trace(String format, Object arg) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.TRACE, format, null, arg));
     }
 
     @Override
     public void trace(String format, Object arg1, Object arg2) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.TRACE, format, null, arg1, arg2));
     }
 
     @Override
     public void trace(String format, Object... arguments) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.TRACE, format, null, arguments));
     }
 
     @Override
     public void trace(String msg, Throwable t) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.TRACE, msg, t));
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return false;
+        return carambola.getConfiguration()
+                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.DEBUG));
     }
 
     @Override
     public void debug(String msg) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.DEBUG, msg, null));
     }
 
     @Override
     public void debug(String format, Object arg) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.DEBUG, format, null, arg));
     }
 
     @Override
     public void debug(String format, Object arg1, Object arg2) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.DEBUG, format, null, arg1, arg2));
     }
 
     @Override
     public void debug(String format, Object... arguments) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.DEBUG, format, null, arguments));
     }
 
     @Override
     public void debug(String msg, Throwable t) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.DEBUG, msg, t));
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return false;
+        return carambola.getConfiguration()
+                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.INFO));
     }
 
     @Override
     public void info(String msg) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.INFO, msg, null));
     }
 
     @Override
     public void info(String format, Object arg) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.INFO, format, null, arg));
     }
 
     @Override
     public void info(String format, Object arg1, Object arg2) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.INFO, format, null, arg1, arg2));
     }
 
     @Override
     public void info(String format, Object... arguments) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.INFO, format, null, arguments));
     }
 
     @Override
     public void info(String msg, Throwable t) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.INFO, msg, t));
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return false;
+        return carambola.getConfiguration()
+                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.WARN));
     }
 
     @Override
     public void warn(String msg) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.WARN, msg, null));
     }
 
     @Override
     public void warn(String format, Object arg) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.WARN, format, null, arg));
     }
 
     @Override
     public void warn(String format, Object... arguments) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.WARN, format, null, arguments));
     }
 
     @Override
     public void warn(String format, Object arg1, Object arg2) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.WARN, format, null, arg1, arg2));
     }
 
     @Override
     public void warn(String msg, Throwable t) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.WARN, msg, t));
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return false;
+        return carambola.getConfiguration()
+                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.ERROR));
     }
 
     @Override
     public void error(String msg) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.ERROR, msg, null));
     }
 
     @Override
     public void error(String format, Object arg) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.ERROR, format, null, arg));
     }
 
     @Override
     public void error(String format, Object arg1, Object arg2) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.ERROR, format, null, arg1, arg2));
     }
 
     @Override
     public void error(String format, Object... arguments) {
-
+        this.carambola.log(SLF4JStatement.ofArguments(Level.ERROR, format, null, arguments));
     }
 
     @Override
     public void error(String msg, Throwable t) {
-
+        this.carambola.log(SLF4JStatement.ofLiteral(Level.ERROR, msg, t));
     }
 }

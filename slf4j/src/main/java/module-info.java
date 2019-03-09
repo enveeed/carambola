@@ -21,6 +21,7 @@ module carambola.slf4j {
 
     requires carambola.core;
     requires org.slf4j;
+    requires java.logging;
 
     provides org.slf4j.spi.SLF4JServiceProvider with CarambolaSLF4JServiceProvider;
 
