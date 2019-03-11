@@ -17,45 +17,4 @@ import com.jfrog.bintray.gradle.BintrayExtension
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("java")
-    id("idea")
-    id("java-library")
-    id("maven-publish")
-    id("com.jfrog.bintray")
-}
-
 dependencies {}
-
-// ===
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "enveeed.carambola"
-            artifactId = "carambola-core"
-            version = project.version.toString()
-
-            from(components["java"])
-        }
-    }
-}
-
-bintray {
-
-    user = (if(project.hasProperty("bintrayUser")) project.property("bintrayUser") else System.getenv("BINTRAY_USER")).toString()
-    key = (if(project.hasProperty("bintrayKey")) project.property("bintrayKey") else System.getenv("BINTRAY_KEY")).toString()
-
-    setPublications("maven")
-
-    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
-        repo = "carambola"
-        name = "carambola-core"
-        setLicenses("GPL-3.0")
-        vcsUrl = "https://github.com/enveeed/carambola"
-
-        version(delegateClosureOf<BintrayExtension.VersionConfig> {
-            name = project.version.toString()
-        })
-    })
-}

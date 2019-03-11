@@ -21,31 +21,3 @@ dependencies {
     implementation(project(":carambola-core"))
     implementation(group = "org.slf4j", name = "slf4j-api", version = "1.8.0-beta4")
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "enveeed.carambola"
-            artifactId = "carambola-slf4j"
-            version = project.version.toString()
-            from(components["java"])
-        }
-    }
-}
-
-bintray {
-
-    setPublications("maven")
-
-    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
-        repo = "carambola"
-        name = "carambola-slf4j"
-        setLicenses("GPL-3.0")
-        vcsUrl = "https://github.com/enveeed/carambola"
-
-        version(delegateClosureOf<BintrayExtension.VersionConfig> {
-            name = project.version.toString()
-        })
-
-    })
-}
