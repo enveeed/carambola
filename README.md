@@ -1,5 +1,4 @@
-![version](https://img.shields.io/bintray/v/enveeed/carambola/carambola-core.svg?color=%23AFB42B&label=latest&style=flat-square)
-![java-version](https://img.shields.io/badge/java-11-yellowgreen.svg?style=flat-square)
+![version](https://img.shields.io/bintray/v/enveeed/carambola/carambola-core.svg?color=%23AFB42B&label=latest&style=flat-square&link=https://bintray.com/enveeed/carambola)
 
 > **NOTE:** This is not intended to be used in projects as of right now, since it's basically just a stub.
 > If you want to use it in your own projects, please consider waiting for a complete (non`-beta`) release.
@@ -21,10 +20,53 @@ carambola provides implementations for the following logging APIs or facades:
 | [SLF4J][ref_slf4j] | `carambola-slf4j` | Includes support for both pre-`1.8` APIs and `1.8+` APIs |
 | [JUL][ref_jul] | `carambola-jul` | Does not automatically enable, needs to be set via system property (see docs)|
 
+`carambola-core` is always required.
 
 [ref_flogger]: https://github.com/google/flogger
 [ref_slf4j]: https://slf4j.org
 [ref_jul]: https://docs.oracle.com/en/java/javase/11/docs/api/java.logging/java/util/logging/LogManager.html
+
+## Gradle
+
+carambola artifacts are hosted on [Bintray](https://bintray.com/enveeed/carambola), to query this repository
+add the following to your `repository` and `dependencies` block, respectively:
+
+> **NOTE:** You should always replace the `+` (latest) version with a manually configured one, otherwise
+> it may be possible for incompatibilities and unexpected changes to happen.
+
+**Groovy DSL**
+```Groovy
+repositories {
+    maven {
+        url 'https://dl.bintray.com/enveeed/carambola'
+    }
+}
+
+// ...
+
+dependencies {
+    implementation group: 'enveeed.carambola', name: 'carambola-core', version: '+'
+}
+```
+
+**KOTLIN DSL**
+```Kotlin
+repositories {
+    maven("https://dl.bintray.com/enveeed/carambola")
+}
+
+// ...
+
+dependencies {
+    implementation(group = "enveeed.carambola", name = "carambola-core",version = "+")
+}
+
+```
+
+---
+
+For the different implementations also add dependencies for 
+the module (e.g.: `carambola-flogger`) in the place of `carambola-core`.
 
 ## License
 
