@@ -24,16 +24,16 @@
  * in the user guide at https://docs.gradle.org/5.0/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'carambola'
+rootProject.name = "carambola"
 
-include 'core'
+include("core")
 
-project(":core").name = 'carambola-core'
+project(":core").name = "carambola-core"
 
-include 'flogger'
-include 'slf4j'
-include 'jul'
+include("flogger")
+include("slf4j")
+//include("jul")
 
-project(":flogger").name = 'carambola-flogger'
-project(":slf4j").name = 'carambola-slf4j'
-project(":jul").name = 'carambola-jul'
+project(":flogger").name = "carambola-flogger"
+project(":slf4j").name = "carambola-slf4j"
+//project(":jul").name = "carambola-jul"

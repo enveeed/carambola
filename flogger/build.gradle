@@ -19,7 +19,11 @@ plugins {
     id 'java'
     id 'idea'
     id 'java-library'
+    id 'maven-publish'
+    id "com.jfrog.bintray"
 }
+
+// ===
 
 dependencies {
     implementation project(':carambola-core')
@@ -27,4 +31,37 @@ dependencies {
     implementation group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.3.1'
     
     // TODO flogger-system-backend dependency is only required for StackBasedCallerFinder, replace this with an internal version
+}
+
+// ===
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'enveeed.carambola'
+            artifactId = 'carambola-flogger'
+            version = project.version
+
+            from components.java
+        }
+    }
+}
+
+bintray {
+
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
+
+    publications = ['maven']
+
+    pkg {
+        repo = 'carambola'
+        name = 'carambola-flogger'
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://github.com/enveeed/carambola'
+
+        version {
+            name = project.version
+        }
+    }
 }

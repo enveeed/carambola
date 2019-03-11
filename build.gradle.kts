@@ -15,19 +15,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+plugins {
+    id("java")
+    id("idea")
+    id("java-library")
+    id("maven-publish")
+    id("com.jfrog.bintray") version "1.8.3"
+}
+
+version = "0.0.1-beta"
+group = "carambola"
+
 subprojects {
-    
-    apply plugin: 'java'
-    apply plugin: 'idea'
-    apply plugin: 'java-library'
-    
-    version "0.0.1-beta"
-    group "carambola"
+
+    apply(plugin = "java")
+    apply(plugin = "idea")
+    apply(plugin = "java-library")
+    apply(plugin = "maven-publish")
+    apply(plugin = "com.jfrog.bintray")
+
+    //
+
+    version = rootProject.version
+    group = rootProject.group
     
     //
     
     repositories {
         mavenCentral()
         jcenter()
+    }
+
+    //
+
+    bintray {
+
+        user = (if(project.hasProperty("bintrayUser")) project.property("bintrayUser") else System.getenv("BINTRAY_USER")).toString()
+        key = (if(project.hasProperty("bintrayKey")) project.property("bintrayKey") else System.getenv("BINTRAY_KEY")).toString()
     }
 }
