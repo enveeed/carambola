@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 
-**KOTLIN DSL**
+**Kotlin DSL**
 ```Kotlin
 repositories {
     maven("https://dl.bintray.com/enveeed/carambola")
