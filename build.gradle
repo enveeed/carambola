@@ -21,7 +21,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'java-library'
     
-    version "2019.0.0-beta"
+    version "0.0.1-beta"
     group "carambola"
     
     //

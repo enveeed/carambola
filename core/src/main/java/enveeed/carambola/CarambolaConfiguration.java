@@ -27,7 +27,7 @@ public final class CarambolaConfiguration {
     // ===
 
     public boolean isLevelEffective(int level) {
-        return level > minimumLevel;
+        return level >= minimumLevel;
     }
 
     public int getMinimumLevel() {

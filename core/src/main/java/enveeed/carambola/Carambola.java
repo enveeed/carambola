@@ -41,11 +41,7 @@ public final class Carambola {
     // ===
 
     public void log(Statement statement) {
-
-        // TODO this is only temporary, use handlers
-
-        System.out.println(statement.getContent());
-        statement.getCause().ifPresent(throwable -> throwable.printStackTrace(System.err));
+        this.handlers.log(statement);
     }
 
     // ===

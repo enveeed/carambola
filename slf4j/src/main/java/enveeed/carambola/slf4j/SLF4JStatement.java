@@ -19,8 +19,10 @@ package enveeed.carambola.slf4j;
 
 import enveeed.carambola.Statement;
 import org.slf4j.event.Level;
+import org.slf4j.helpers.MessageFormatter;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SLF4JStatement implements Statement {
@@ -56,10 +58,10 @@ public final class SLF4JStatement implements Statement {
     @Override
     public String getContent() {
         if(this.literal != null) {
-            return String.format("%s", this.literal);
+            return Objects.toString(this.literal);
         }
         else {
-            return String.format(this.format, this.arguments);
+            return MessageFormatter.format(this.format, this.arguments).getMessage();
         }
     }
 

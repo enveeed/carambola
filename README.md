@@ -1,5 +1,8 @@
-![version](https://img.shields.io/badge/version-2019.0.0--beta-blue.svg?style=flat-square)
+![version](https://img.shields.io/badge/version-0.0.1--beta-blue.svg?style=flat-square)
 ![java-version](https://img.shields.io/badge/java-11-yellowgreen.svg?style=flat-square)
+
+> **NOTE:** This is not intended to be used in projects as of right now, since it's basically just a stub.
+> If you want to use it in your own projects, please consider waiting for a complete (non`-beta`) release.
 
 # carambola
 
@@ -23,3 +26,6 @@ carambola provides implementations for the following logging APIs or facades:
 [ref_slf4j]: https://slf4j.org
 [ref_jul]: https://docs.oracle.com/en/java/javase/11/docs/api/java.logging/java/util/logging/LogManager.html
 
+## License
+
+This software is licensed under the **[GNU General Public License v3.0](https://www.gnu.org/licenses/)**.

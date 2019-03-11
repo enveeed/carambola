@@ -27,5 +27,4 @@ public class CarambolaLoggerAdapter extends Logger {
 
     // TODO NO-OP
 
-
 }

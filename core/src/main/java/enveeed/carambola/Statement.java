@@ -22,15 +22,13 @@ import java.util.Optional;
 
 public interface Statement {
 
+    int getLevel();
+
     Instant getTimestamp();
 
     String getContent();
 
     // ===
-
-    int getLevel();
-
-    //
 
     default Optional<Throwable> getCause() {
         return Optional.empty();

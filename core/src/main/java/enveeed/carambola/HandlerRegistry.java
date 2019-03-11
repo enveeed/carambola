@@ -17,5 +17,25 @@
 
 package enveeed.carambola;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class HandlerRegistry {
+    HandlerRegistry() {}
+
+    // ===
+
+    private final Set<Handler> handlers = new HashSet<>();
+
+    // ===
+
+    public void register(Handler handler) {
+        this.handlers.add(handler);
+    }
+
+    // ===
+
+    void log(Statement statement) {
+        this.handlers.forEach(handler -> handler.handle(statement));
+    }
 }
