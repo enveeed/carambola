@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-0.0.1--beta-blue.svg?style=flat-square)
+![version](https://img.shields.io/bintray/v/enveeed/carambola/carambola-core.svg?color=%23AFB42B&label=latest&style=flat-square)
 ![java-version](https://img.shields.io/badge/java-11-yellowgreen.svg?style=flat-square)
 
 > **NOTE:** This is not intended to be used in projects as of right now, since it's basically just a stub.

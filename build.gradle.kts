@@ -23,9 +23,6 @@ plugins {
     id("com.jfrog.bintray") version "1.8.3"
 }
 
-version = "0.0.1-beta"
-group = "carambola"
-
 subprojects {
 
     apply(plugin = "java")
@@ -36,8 +33,8 @@ subprojects {
 
     //
 
-    version = rootProject.version
-    group = rootProject.group
+    version = "0.0.1-beta"
+    group = "carambola"
     
     //
     
