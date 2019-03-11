@@ -51,7 +51,7 @@ subprojects {
         publications {
             create<MavenPublication>("maven") {
                 groupId = "enveeed.carambola"
-                artifactId = "carambola-core"
+                artifactId = project.name
                 version = project.version.toString()
 
                 from(components["java"])
@@ -68,7 +68,7 @@ subprojects {
 
         pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
             repo = "carambola"
-            name = "carambola-core"
+            name = project.name
             setLicenses("GPL-3.0")
             vcsUrl = "https://github.com/enveeed/carambola"
 
