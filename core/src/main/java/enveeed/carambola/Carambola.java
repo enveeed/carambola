@@ -34,19 +34,19 @@ public final class Carambola {
 
     // ===
 
-    private final HandlerRegistry handlers = new HandlerRegistry();
+    private final LogHandlerRegistry handlers = new LogHandlerRegistry();
 
     private final CarambolaConfiguration configuration = new CarambolaConfiguration();
 
     // ===
 
-    public void log(Statement statement) {
+    public void log(LogStatement statement) {
         this.handlers.log(statement);
     }
 
     // ===
 
-    public HandlerRegistry getHandlers() {
+    public LogHandlerRegistry getHandlers() {
         return this.handlers;
     }
 

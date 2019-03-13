@@ -17,8 +17,8 @@
 
 package enveeed.carambola;
 
-public interface Handler {
+public interface LogHandler {
 
-    void handle(Statement log);
+    void handle(LogStatement log);
 
 }

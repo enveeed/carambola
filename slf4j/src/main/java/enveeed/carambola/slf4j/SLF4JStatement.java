@@ -17,7 +17,7 @@
 
 package enveeed.carambola.slf4j;
 
-import enveeed.carambola.Statement;
+import enveeed.carambola.LogStatement;
 import org.slf4j.event.Level;
 import org.slf4j.helpers.MessageFormatter;
 
@@ -25,7 +25,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SLF4JStatement implements Statement {
+public final class SLF4JStatement implements LogStatement {
 
     private final Instant timestamp;
 

@@ -21,12 +21,12 @@ import com.google.common.flogger.LogContext;
 import com.google.common.flogger.LogSite;
 import com.google.common.flogger.backend.LogData;
 import enveeed.carambola.Site;
-import enveeed.carambola.Statement;
+import enveeed.carambola.LogStatement;
 
 import java.time.Instant;
 import java.util.Optional;
 
-public final class FloggerStatement implements Statement {
+public final class FloggerStatement implements LogStatement {
 
     private final LogData data;
 

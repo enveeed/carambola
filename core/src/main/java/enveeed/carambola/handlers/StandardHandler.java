@@ -17,54 +17,51 @@
 
 package enveeed.carambola.handlers;
 
-import enveeed.carambola.Handler;
-import enveeed.carambola.Statement;
+import enveeed.carambola.LogHandler;
+import enveeed.carambola.LogStatement;
 
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 
-public final class StandardHandler implements Handler {
+public final class StandardHandler implements LogHandler {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static final String RED = "\u001B[48;2;201;54;54m";
-    private static final String YELLOW = "\u001B[48;2;248;106;28m";
-    private static final String BLUE = "\u001B[48;2;0;91;255m";
+    private static final String ERROR   = "\u001B[48;2;201;54;54m ERROR \u001B[0m";
+    private static final String TRACE   = "\u001B[48;2;201;54;54m ERROR \u001B[0m";
+    private static final String WARN    = "\u001B[48;2;248;106;28m WARN  \u001B[0m";
+    private static final String INFO   = " INFO  ";
+    private static final String DEBUG   = "\u001B[48;2;0;91;255m DEBUG \u001B[0m";
 
     @Override
-    public void handle(Statement log) {
+    public void handle(LogStatement log) {
 
-        String levelColor;
-        String levelStr;
+        String prefix;
 
         int level = log.getLevel();
 
         if(level >= Level.SEVERE.intValue()) {
-            levelColor = RED;
-            levelStr = "E";
+            prefix = ERROR;
         } else if(level >= Level.WARNING.intValue()) {
-            levelColor = YELLOW;
-            levelStr = "W";
+            prefix = WARN;
         } else if(level >= Level.INFO.intValue()) {
-            levelColor = "";
-            levelStr = "I";
+            prefix = INFO;
         } else {
-            levelColor = BLUE;
-            levelStr = "D";
+            prefix = DEBUG;
         }
 
         //
 
-        String out = String.format("\u001B[48;2;158;158;158m\u001B[30m%s \u001B[0m\u001B[37m%s %s \u001B[0m %s",
+        String out = String.format("%s %s | %s\n",
+                prefix,
                 formatter.format(log.getTimestamp()),
-                levelColor, levelStr,
                 log.getContent());
-
-        //
 
         System.out.println(out);
 
-        if(log.getCause().isPresent()) log.getCause().orElseThrow().printStackTrace(System.err);
+        if(log.getCause().isPresent()) {
+            log.getCause().orElseThrow().printStackTrace(System.out);
+        }
     }
 
 }

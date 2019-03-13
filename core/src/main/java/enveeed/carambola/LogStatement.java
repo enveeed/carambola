@@ -17,25 +17,24 @@
 
 package enveeed.carambola;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
+import java.util.Optional;
 
-public final class HandlerRegistry {
-    HandlerRegistry() {}
+public interface LogStatement {
+
+    int getLevel();
+
+    Instant getTimestamp();
+
+    String getContent();
 
     // ===
 
-    private final Set<Handler> handlers = new HashSet<>();
-
-    // ===
-
-    public void register(Handler handler) {
-        this.handlers.add(handler);
+    default Optional<Throwable> getCause() {
+        return Optional.empty();
     }
 
-    // ===
-
-    void log(Statement statement) {
-        this.handlers.forEach(handler -> handler.handle(statement));
+    default Optional<Site> getSite() {
+        return Optional.empty();
     }
 }
