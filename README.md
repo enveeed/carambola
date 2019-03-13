@@ -1,4 +1,4 @@
-![version](https://img.shields.io/bintray/v/enveeed/carambola/carambola-core.svg?color=%23AFB42B&label=latest&style=flat-square&link=https://bintray.com/enveeed/carambola)
+![version](https://img.shields.io/badge/dynamic/json.svg?color=%23AFB42B&label=latest&query=name&style=flat-square&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fenveeed%2Fcarambola%2Fcarambola-core%2Fversions%2F_latest&link=https://bintray.com/enveeed/carambola)
 
 > **NOTE:** This is not intended to be used in projects as of right now, since it's basically just a stub.
 > If you want to use it in your own projects, please consider waiting for a complete (non`-beta`) release.
