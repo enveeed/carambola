@@ -22,7 +22,9 @@ import enveeed.carambola.dsl.Configuration;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -141,29 +143,16 @@ public final class Carambola {
 
         // attempt to find the configuration script
 
-        URL resourceURL = ClassLoader.getSystemClassLoader()
-                .getResource(CONFIGURATION_SCRIPT);
+        InputStream input = ClassLoader.getSystemClassLoader()
+                .getResourceAsStream(CONFIGURATION_SCRIPT);
 
-        if(resourceURL == null) return; // TODO warn that there is no configuration script
-
-        Path configurationFile;
-
-        try {
-            configurationFile = Paths.get(resourceURL.toURI());
-        } catch (URISyntaxException e) {
-            // TODO this is an internal error and should be logged,
-            //  since usually the URI should be valid.
-            e.printStackTrace();
-            return;
-        }
-
-        // read the file contents
+        if(input == null) return; // TODO warn that there is no configuration script
 
         byte[] content;
 
         try {
-            content = Files.readAllBytes(configurationFile);
-        } catch (IOException e) {
+            content = input.readAllBytes();
+        } catch (Exception e) {
             // TODO this is an internal error and should be
             //  logged because it means that the file could not be read correctly
             e.printStackTrace();
