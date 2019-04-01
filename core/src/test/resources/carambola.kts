@@ -15,15 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(kotlin("script-runtime"))
-    implementation(kotlin("script-util"))
+import enveeed.carambola.dsl.*
+import enveeed.carambola.handlers.StandardHandler
 
-    // Unit Testing
-    testImplementation( group = "org.junit.jupiter", name = "junit-jupiter-api",    version = "5.3.2") // JUnit API
-    testRuntime(        group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.3.2") // JUnit Engine
-}
+// carambola configuration script for TESTING ONLY
+carambola {
 
-delegateClosureOf<Test> {
-    useJUnitPlatform()
+    handlers {
+        handler(StandardHandler())
+    }
+
 }

@@ -164,7 +164,8 @@ public final class Carambola {
 
         // load the kotlin script engine
 
-        ScriptEngine engine = new ScriptEngineManager().getEngineByExtension("kts");
+        ScriptEngine engine = new ScriptEngineManager(Thread.currentThread().getContextClassLoader())
+                .getEngineByExtension("kts");
 
         // execute the script and get the configuration object
 

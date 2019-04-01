@@ -15,15 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(kotlin("script-runtime"))
-    implementation(kotlin("script-util"))
+package enveeed.carambola;
 
-    // Unit Testing
-    testImplementation( group = "org.junit.jupiter", name = "junit-jupiter-api",    version = "5.3.2") // JUnit API
-    testRuntime(        group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.3.2") // JUnit Engine
-}
+import org.junit.jupiter.api.Test;
 
-delegateClosureOf<Test> {
-    useJUnitPlatform()
+import static org.junit.jupiter.api.Assertions.*;
+
+class CarambolaTest {
+
+    @Test
+    void testInit() {
+
+        Carambola instance = assertDoesNotThrow(Carambola::get);
+        assertNotNull(instance);
+
+    }
+
+    @Test
+    void testDSLHandlerCount() {
+
+        Carambola instance = Carambola.get();
+
+        assertEquals(instance.getHandlers().size(), 1);
+
+    }
 }
