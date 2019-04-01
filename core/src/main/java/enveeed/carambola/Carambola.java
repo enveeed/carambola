@@ -21,16 +21,8 @@ import enveeed.carambola.dsl.Configuration;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
@@ -81,6 +73,11 @@ public final class Carambola {
      */
     private final Set<Handler> handlers = new HashSet<>();
 
+    /**
+     * The global minimum level for pre-filtering
+     */
+    private int level = Integer.MIN_VALUE;
+
     // === CONFIGURATION ===
 
     /**
@@ -122,6 +119,11 @@ public final class Carambola {
         Set<Handler> handlers = configuration.getHandlers();
 
         this.handlers.addAll(handlers);
+    }
+
+    private void applyLevel(Configuration configuration) {
+
+        this.level = configuration.getLevel();
     }
 
     // === LOG ===
@@ -192,5 +194,9 @@ public final class Carambola {
 
     public Set<Handler> getHandlers() {
         return Set.copyOf(this.handlers);
+    }
+
+    public int getLevel() {
+        return this.level;
     }
 }

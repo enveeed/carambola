@@ -1,8 +1,0 @@
-module carambola.flogger {
-
-    requires carambola.core;
-
-    requires flogger;
-    requires flogger.system.backend;
-    requires java.logging;
-}

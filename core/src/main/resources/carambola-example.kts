@@ -16,6 +16,7 @@
  */
 
 import enveeed.carambola.dsl.carambola
+import java.util.logging.Level
 
 // This is an example "carambola.kts" configuration script file.
 carambola {
@@ -23,6 +24,8 @@ carambola {
     // Adapters are configured in the "adapters" block.
     adapters {
 
+        // useFlogger() // for carambola-flogger
+        // useSLF4J() // for carambola-slf4j
     }
 
     // Handlers are configured in the "handlers" block.
@@ -46,5 +49,9 @@ carambola {
 
         }
     }
+
+    // general minimum level, filtered out before it reaches any handler.
+    // e.g. useful for pre-filtering APIs like Google Flogger as it provides a speed benefit
+    level(Level.INFO)
 
 }

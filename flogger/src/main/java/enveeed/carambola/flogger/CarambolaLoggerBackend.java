@@ -44,13 +44,7 @@ public final class CarambolaLoggerBackend extends LoggerBackend {
 
     @Override
     public boolean isLoggable(Level lvl) {
-
-        return true;
-
-        // sadly we need to always use true here,
-        // because carambola has many handlers with different filters
-        // making it currently not possible to find out if a level is going to be logged or not
-        // This may be fixed in the future by analyzing filters, or introducing a general filter. TODO
+        return lvl.intValue() >= carambola.getLevel();
     }
 
     @Override

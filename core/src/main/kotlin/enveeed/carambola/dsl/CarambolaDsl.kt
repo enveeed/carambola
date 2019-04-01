@@ -18,6 +18,7 @@
 package enveeed.carambola.dsl
 
 import enveeed.carambola.*
+import java.util.logging.Level
 
 // === HANDLERS ===
 
@@ -119,6 +120,8 @@ class ConfigurationBlock {
     private var adapters: Set<Adapter> = mutableSetOf()
     private var handlers: Set<Handler> = mutableSetOf()
 
+    private var level: Int = Int.MIN_VALUE
+
     //
 
     fun adapters(setup: AdaptersBlock.() -> Unit = {}) {
@@ -133,10 +136,20 @@ class ConfigurationBlock {
         handlers = handlers + block.build()
     }
 
+    //
+
+    fun level(level: Int) {
+        this.level = level
+    }
+
+    fun level(level: Level) {
+        level(level.intValue())
+    }
+
     // ===
 
     fun build(): Configuration {
-        return Configuration(adapters, handlers)
+        return Configuration(adapters, handlers, level)
     }
 
     // ===
@@ -145,6 +158,10 @@ class ConfigurationBlock {
     @Deprecated(level = DeprecationLevel.ERROR, message = "'carambola' blocks can't be nested.")
     fun carambola(param: () -> Unit = {}) {}
 }
+
+// ===
+
+class Configuration(val adapters: Set<Adapter>, val handlers: Set<Handler>, val level: Int)
 
 // ===
 
