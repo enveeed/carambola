@@ -40,7 +40,7 @@ subprojects {
 
     //
 
-    version = "0.0.1-beta10"
+    version = "0.0.1-beta12"
     group = "carambola"
     
     //
