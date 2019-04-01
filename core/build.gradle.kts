@@ -1,5 +1,3 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-
 /*
  * Copyright (c) 2019 Arthur Schüler / enveeed (https://github.com/enveeed)
  *
@@ -17,4 +15,6 @@ import com.jfrog.bintray.gradle.BintrayExtension
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {}
+dependencies {
+    implementation(kotlin("script-runtime"))
+}

@@ -15,9 +15,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(project(":carambola-core"))
-    implementation(group = "com.google.flogger", name = "flogger", version = "0.3.1")
-    implementation(group = "com.google.flogger", name = "flogger-system-backend", version = "0.3.1")
-    // TODO flogger-system-backend dependency is only required for StackBasedCallerFinder, replace this with an internal version
+package enveeed.carambola.filters;
+
+import enveeed.carambola.Filter;
+import enveeed.carambola.Statement;
+
+import java.util.logging.Level;
+
+public final class LevelFilter implements Filter {
+
+    private final int value;
+
+    // ===
+
+    public LevelFilter(int value) {
+        this.value = value;
+    }
+
+    public LevelFilter(Level level) {
+        this.value = level.intValue();
+    }
+
+    // ===
+
+    @Override
+    public boolean test(Statement statement) {
+        return statement.getLevel() >= this.value;
+    }
+
+    // ===
+
+    public int getValue() {
+        return this.value;
+    }
 }

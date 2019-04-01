@@ -1,5 +1,3 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-
 /*
  * Copyright (c) 2019 Arthur Schüler / enveeed (https://github.com/enveeed)
  *

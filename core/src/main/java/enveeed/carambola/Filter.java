@@ -15,9 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(project(":carambola-core"))
-    implementation(group = "com.google.flogger", name = "flogger", version = "0.3.1")
-    implementation(group = "com.google.flogger", name = "flogger-system-backend", version = "0.3.1")
-    // TODO flogger-system-backend dependency is only required for StackBasedCallerFinder, replace this with an internal version
+package enveeed.carambola;
+
+public interface Filter {
+
+    boolean test(Statement statement);
+
 }

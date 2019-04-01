@@ -17,25 +17,8 @@
 
 package enveeed.carambola;
 
-import java.util.HashSet;
-import java.util.Set;
+public interface HandlerExecutor {
 
-public final class LogHandlerRegistry {
-    LogHandlerRegistry() {}
+    void handle(Statement statement);
 
-    // ===
-
-    private final Set<LogHandler> handlers = new HashSet<>();
-
-    // ===
-
-    public void register(LogHandler handler) {
-        this.handlers.add(handler);
-    }
-
-    // ===
-
-    void log(LogStatement statement) {
-        this.handlers.forEach(handler -> handler.handle(statement));
-    }
 }

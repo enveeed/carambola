@@ -15,10 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package enveeed.carambola;
+package enveeed.carambola.flogger;
 
-public interface LogHandler {
+import enveeed.carambola.Adapter;
 
-    void handle(LogStatement log);
+public final class FloggerAdapter implements Adapter {
 
+    @Override
+    public void initialize() {
+
+    }
 }

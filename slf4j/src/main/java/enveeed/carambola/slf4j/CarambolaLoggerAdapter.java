@@ -36,8 +36,7 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isTraceEnabled() {
-        return carambola.getConfiguration()
-                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.TRACE));
+        return true; // TODO
     }
 
     @Override
@@ -67,8 +66,7 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isDebugEnabled() {
-        return carambola.getConfiguration()
-                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.DEBUG));
+        return true; // TODO
     }
 
     @Override
@@ -98,8 +96,7 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isInfoEnabled() {
-        return carambola.getConfiguration()
-                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.INFO));
+        return true; // TODO
     }
 
     @Override
@@ -129,8 +126,7 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isWarnEnabled() {
-        return carambola.getConfiguration()
-                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.WARN));
+        return true; // TODO
     }
 
     @Override
@@ -160,8 +156,7 @@ public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public boolean isErrorEnabled() {
-        return carambola.getConfiguration()
-                .isLevelEffective(SLF4JStatement.fromSLF4JLevel(Level.ERROR));
+        return true; // TODO
     }
 
     @Override

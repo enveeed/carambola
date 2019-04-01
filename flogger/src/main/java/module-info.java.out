@@ -1,4 +1,3 @@
-// TODO add this once Flogger has the PlatformProvider "module already exists in another package" issue fixed
 module carambola.flogger {
 
     requires carambola.core;

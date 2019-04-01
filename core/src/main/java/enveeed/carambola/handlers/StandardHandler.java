@@ -17,15 +17,17 @@
 
 package enveeed.carambola.handlers;
 
-import enveeed.carambola.LogHandler;
-import enveeed.carambola.LogStatement;
+import enveeed.carambola.HandlerExecutor;
+import enveeed.carambola.Statement;
 
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 
-public final class StandardHandler implements LogHandler {
+public final class StandardHandler implements HandlerExecutor {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneId.systemDefault());
 
     private static final String ERROR   = "\u001B[48;2;201;54;54m ERROR \u001B[0m";
     private static final String TRACE   = "\u001B[48;2;201;54;54m ERROR \u001B[0m";
@@ -34,7 +36,7 @@ public final class StandardHandler implements LogHandler {
     private static final String DEBUG   = "\u001B[48;2;0;91;255m DEBUG \u001B[0m";
 
     @Override
-    public void handle(LogStatement log) {
+    public void handle(Statement log) {
 
         String prefix;
 
@@ -52,7 +54,7 @@ public final class StandardHandler implements LogHandler {
 
         //
 
-        String out = String.format("%s %s | %s\n",
+        String out = String.format("%s %s | %s",
                 prefix,
                 formatter.format(log.getTimestamp()),
                 log.getContent());

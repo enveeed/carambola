@@ -17,35 +17,35 @@
 
 package enveeed.carambola;
 
+import java.util.Set;
+
 /**
- * Immutable information about the location a {@link Statement} happened in.
+ * A handler for {@link Statement Statements}.
+ * <p/>
+ * Consists of an {@link HandlerExecutor} which does the actual handling of the
+ * statements, and zero or more {@link Filter Filters}, which all need to match
+ * for the statement to actually reach the executor.
  */
-public final class Site {
+public final class Handler {
 
-    private final String className;
-    private final String methodName;
-
-    private final int line;
+    private final HandlerExecutor executor;
+    private final Set<Filter> filters;
 
     // ===
 
-    public Site(String className, String methodName, int line) {
-        this.className = className;
-        this.methodName = methodName;
-        this.line = line;
+    public Handler(HandlerExecutor executor, Set<Filter> filters) {
+        this.executor = executor;
+        this.filters = filters;
     }
 
     // ===
 
-    public String getClassName() {
-        return this.className;
-    }
+    void handle(Statement statement) {
 
-    public String getMethodName() {
-        return this.methodName;
-    }
+        // test the statement with all filters
+        for (Filter filter : this.filters) if (!filter.test(statement)) return;
 
-    public int getLine() {
-        return this.line;
+        // passed all filters, handle it
+        this.executor.handle(statement);
     }
 }

@@ -1,5 +1,7 @@
 module carambola.core {
+    
     requires java.logging;
+    requires kotlin.stdlib;
 
     exports enveeed.carambola;
     exports enveeed.carambola.handlers;

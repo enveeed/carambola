@@ -17,6 +17,22 @@
 
 package enveeed.carambola;
 
+import enveeed.carambola.dsl.Configuration;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
+
 public final class Carambola {
 
     private static Carambola carambola = null;
@@ -28,29 +44,163 @@ public final class Carambola {
     // ===
 
     public static Carambola get() {
-        if(carambola == null) carambola = new Carambola();
+        if(carambola == null) {
+            carambola = new Carambola();
+
+            // attempt to load a configuration script
+            carambola.attemptDSLConfiguration();
+        }
         return carambola;
     }
 
     // ===
 
-    private final LogHandlerRegistry handlers = new LogHandlerRegistry();
-
-    private final CarambolaConfiguration configuration = new CarambolaConfiguration();
+    /**
+     * The expected file name for the configuration script, if existent.
+     */
+    private final static String CONFIGURATION_SCRIPT = "carambola.kts";
 
     // ===
 
-    public void log(LogStatement statement) {
-        this.handlers.log(statement);
+    /**
+     * Lock for configuration changes.
+     */
+    private final ReentrantLock configurationLock = new ReentrantLock();
+
+    //
+
+    /**
+     * All currently active adapters.
+     */
+    private final Set<Adapter> adapters = new HashSet<>();
+
+    /**
+     * All currently active handlers.
+     */
+    private final Set<Handler> handlers = new HashSet<>();
+
+    // === CONFIGURATION ===
+
+    /**
+     * Update carambola to use the given DSL configuration, replacing
+     * the current one.
+     * @param configuration the DSL configuration
+     */
+    public void apply(Configuration configuration) {
+
+        configurationLock.lock();
+
+        try {
+
+            this.applyAdapters(configuration);
+            this.applyHandlers(configuration);
+
+        } finally {
+            configurationLock.unlock();
+        }
+    }
+
+    //
+
+    private void applyAdapters(Configuration configuration) {
+
+        Set<Adapter> adapters = configuration.getAdapters();
+
+        for (Adapter adapter : adapters) {
+            if(this.adapters.contains(adapter)) continue;
+
+            adapter.initialize();
+
+            this.adapters.add(adapter);
+        }
+    }
+
+    private void applyHandlers(Configuration configuration) {
+
+        Set<Handler> handlers = configuration.getHandlers();
+
+        this.handlers.addAll(handlers);
+    }
+
+    // === LOG ===
+
+    /**
+     * Log the given statement.
+     * @param statement the statement.
+     */
+    public void log(Statement statement) {
+        for (Handler handler : this.handlers) handler.handle(statement);
+    }
+
+    // === DSL ===
+
+    /**
+     * Attempt to apply a {@link Configuration} from {@link #CONFIGURATION_SCRIPT}.
+     */
+    private void attemptDSLConfiguration() {
+
+        // attempt to find the configuration script
+
+        URL resourceURL = ClassLoader.getSystemClassLoader()
+                .getResource(CONFIGURATION_SCRIPT);
+
+        if(resourceURL == null) return; // TODO warn that there is no configuration script
+
+        Path configurationFile;
+
+        try {
+            configurationFile = Paths.get(resourceURL.toURI());
+        } catch (URISyntaxException e) {
+            // TODO this is an internal error and should be logged,
+            //  since usually the URI should be valid.
+            e.printStackTrace();
+            return;
+        }
+
+        // read the file contents
+
+        byte[] content;
+
+        try {
+            content = Files.readAllBytes(configurationFile);
+        } catch (IOException e) {
+            // TODO this is an internal error and should be
+            //  logged because it means that the file could not be read correctly
+            e.printStackTrace();
+            return;
+        }
+
+        // TODO document that configuration scripts are expected to be UTF-8
+        String script = new String(content, StandardCharsets.UTF_8);
+
+        // load the kotlin script engine
+
+        ScriptEngine engine = new ScriptEngineManager().getEngineByExtension("kts");
+
+        // execute the script and get the configuration object
+
+        Configuration configuration;
+
+        try {
+            configuration = (Configuration) engine.eval(script);
+        } catch (Exception e) {
+            // TODO warn that the configuration script was invalid.
+            e.printStackTrace();
+            return;
+        }
+
+        // apply the configuration
+
+        this.apply(configuration);
     }
 
     // ===
 
-    public LogHandlerRegistry getHandlers() {
-        return this.handlers;
+    public Set<Adapter> getAdapters() {
+        return Set.copyOf(this.adapters);
     }
 
-    public CarambolaConfiguration getConfiguration() {
-        return this.configuration;
+    public Set<Handler> getHandlers() {
+        return Set.copyOf(this.handlers);
     }
 }

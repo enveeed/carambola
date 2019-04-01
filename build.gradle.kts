@@ -1,4 +1,5 @@
 import com.jfrog.bintray.gradle.BintrayExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
  * Copyright (c) 2019 Arthur Schüler / enveeed (https://github.com/enveeed)
@@ -22,7 +23,10 @@ plugins {
     id("idea")
     id("java-library")
     id("maven-publish")
+
     id("com.jfrog.bintray") version "1.8.3"
+
+    kotlin("jvm") version "1.3.21"
 }
 
 subprojects {
@@ -32,10 +36,11 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
     apply(plugin = "com.jfrog.bintray")
+    apply(plugin = "kotlin")
 
     //
 
-    version = "0.0.1-beta1"
+    version = "0.0.1-beta7"
     group = "carambola"
     
     //
@@ -43,6 +48,27 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
+    }
+
+    //
+
+    dependencies {
+        implementation(kotlin("stdlib-jdk8"))
+        implementation(kotlin("compiler-embeddable"))
+    }
+
+    //
+
+    val compileKotlin: KotlinCompile by tasks
+
+    compileKotlin.kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    val compileTestKotlin: KotlinCompile by tasks
+
+    compileTestKotlin.kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     //

@@ -15,9 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(project(":carambola-core"))
-    implementation(group = "com.google.flogger", name = "flogger", version = "0.3.1")
-    implementation(group = "com.google.flogger", name = "flogger-system-backend", version = "0.3.1")
-    // TODO flogger-system-backend dependency is only required for StackBasedCallerFinder, replace this with an internal version
+package enveeed.carambola;
+
+import java.time.Instant;
+import java.util.Optional;
+
+/**
+ * A log statement, a single logging event which was emitted
+ * somewhere in the system.
+ */
+public interface Statement {
+
+    int getLevel();
+
+    Instant getTimestamp();
+
+    String getContent();
+
+    // ===
+
+    default Optional<Throwable> getCause() {
+        return Optional.empty();
+    }
+
+    default Optional<Site> getSite() {
+        return Optional.empty();
+    }
 }

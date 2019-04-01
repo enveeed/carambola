@@ -15,26 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package enveeed.carambola;
+package enveeed.carambola.slf4j.dsl
 
-import java.time.Instant;
-import java.util.Optional;
+import enveeed.carambola.dsl.AdaptersBlock
+import enveeed.carambola.slf4j.SLF4JAdapter
 
-public interface LogStatement {
+// === ADAPTERS ===
 
-    int getLevel();
-
-    Instant getTimestamp();
-
-    String getContent();
-
-    // ===
-
-    default Optional<Throwable> getCause() {
-        return Optional.empty();
-    }
-
-    default Optional<Site> getSite() {
-        return Optional.empty();
-    }
+/**
+ * Use the [SLF4JAdapter].
+ */
+fun AdaptersBlock.useSLF4J() {
+    adapter(SLF4JAdapter())
 }

@@ -15,28 +15,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package enveeed.carambola;
+package enveeed.carambola.dsl
 
-public final class CarambolaConfiguration {
-
-    /**
-     * The minimum level log statements require to be displayed.
-     */
-    private int minimumLevel = Integer.MIN_VALUE;
-
-    // ===
-
-    public boolean isLevelEffective(int level) {
-        return level >= minimumLevel;
-    }
-
-    public int getMinimumLevel() {
-        return minimumLevel;
-    }
-
-    public void setMinimumLevel(int level) {
-        this.minimumLevel = level;
-    }
-
-    // ===
-}
+/**
+ * Marks a DSL as a carambola DSL.
+ */
+@DslMarker
+annotation class CarambolaDslMarker
