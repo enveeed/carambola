@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import enveeed.carambola.dsl.carambola
+import enveeed.carambola.dsl.*
 import java.util.logging.Level
 
 // This is an example "carambola.kts" configuration script file.

@@ -18,7 +18,7 @@ carambola provides implementations for the following logging APIs or facades:
 | --- | --- | --- |
 | [Flogger][ref_flogger] | `carambola-flogger` |   |
 | [SLF4J][ref_slf4j] | `carambola-slf4j` | Includes support for both pre-`1.8` APIs and `1.8+` APIs |
-| [JUL][ref_jul] | `carambola-jul` | Does not automatically enable, needs to be set via system property (see docs)|
+| [JUL][ref_jul] | `carambola-jul` | **NOT SUPPORTED YET** |
 
 `carambola-core` is always required.
 
@@ -67,6 +67,74 @@ dependencies {
 
 For the different implementations also add dependencies for 
 the module (e.g.: `carambola-flogger`) in the place of `carambola-core`.
+
+## Principle
+
+Carambola works with **Adapters** and **Handlers**.
+
+**Adapters** deliver log statements
+from different logging APIs to carambola and make sure that they are as uniform as possible.
+
+**Handlers** handle the log statements which arrive at carambola in any customizable way.
+Handlers also include filtering, which enables you to for example only log severe errors with
+one handler, but everything with another, and so on. 
+
+## Configuration
+
+Configuration is done via a *configuration script* written in **Kotlin**. 
+This allows you to include both declarative elements and functional ones in the configuration
+and enables you to use Java and Kotlin both to full capacity in the configuration, for example
+when adding custom handlers or adapters.
+
+The configuration script must be called `carambola.kts` and must be located
+at the root of the classpath. Carambola also works without one, in this case you need to manually
+configure it from your application.
+
+---
+
+**Example `carambola.kts`**
+```Kotlin
+import enveeed.carambola.dsl.*
+import java.util.logging.Level
+
+// This is an example "carambola.kts" configuration script file.
+carambola {
+
+    // Adapters are configured in the "adapters" block.
+    adapters {
+
+        // useFlogger() // for carambola-flogger
+        // useSLF4J() // for carambola-slf4j
+    }
+
+    // Handlers are configured in the "handlers" block.
+    handlers {
+
+        // Handlers are added by calling handler(...)
+        handler({
+
+            // This is a lambda which acts as a HandlerExecutor, printing the statement to STDOUT
+            System.out.println(this.content)
+
+        }) {
+
+            // This is the handler configuration block.
+
+            // Filters are added by calling filter(...)
+            filter {
+                // This is a lambda which acts as a Filter, filtering all statements which have level below 100.
+                this.level >= 100
+            }
+
+        }
+    }
+
+    // general minimum level, filtered out before it reaches any handler.
+    // e.g. useful for pre-filtering APIs like Google Flogger as it provides a speed benefit
+    level(Level.INFO)
+
+}
+```
 
 ## License
 
