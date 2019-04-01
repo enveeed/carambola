@@ -17,4 +17,5 @@
 
 dependencies {
     implementation(kotlin("script-runtime"))
+    implementation(kotlin("script-util"))
 }
