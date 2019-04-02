@@ -25,6 +25,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
+@Deprecated // TODO replace with statement instance, rather than implementation
 public final class SLF4JStatement implements Statement {
 
     private final Instant timestamp;

@@ -19,10 +19,16 @@ package enveeed.carambola.slf4j;
 
 import enveeed.carambola.Adapter;
 
+/**
+ * An {@link Adapter} for SLF4J.
+ */
 public final class SLF4JAdapter implements Adapter {
+    public SLF4JAdapter() {}
+
+    // ===
 
     @Override
     public void initialize() {
-
+        // sadly we can't do this yet.
     }
 }

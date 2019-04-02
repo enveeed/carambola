@@ -21,14 +21,17 @@ import enveeed.carambola.Carambola;
 import org.slf4j.event.Level;
 import org.slf4j.helpers.MarkerIgnoringBase;
 
-public final class CarambolaLoggerAdapter extends MarkerIgnoringBase {
+/**
+ * A SLF4J logger which redirects everything to carambola.
+ */
+public final class CarambolaSLFJLogger extends MarkerIgnoringBase {
 
     private final Carambola carambola = Carambola.get();
     private final String name;
 
     // ===
 
-    CarambolaLoggerAdapter(String name) {
+    CarambolaSLFJLogger(String name) {
         this.name = name;
     }
 

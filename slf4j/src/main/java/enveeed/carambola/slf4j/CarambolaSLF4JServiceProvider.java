@@ -22,6 +22,9 @@ import org.slf4j.IMarkerFactory;
 import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
+/**
+ * {@link SLF4JServiceProvider} implementation for carambola, using META-INF/services.
+ */
 public final class CarambolaSLF4JServiceProvider implements SLF4JServiceProvider {
 
     private final CarambolaLoggerFactory factory = new CarambolaLoggerFactory();
@@ -35,12 +38,12 @@ public final class CarambolaSLF4JServiceProvider implements SLF4JServiceProvider
 
     @Override
     public IMarkerFactory getMarkerFactory() {
-        return null;
+        return null; // not supported.
     }
 
     @Override
     public MDCAdapter getMDCAdapter() {
-        return null;
+        return null; // not supported.
     }
 
     @Override
@@ -60,6 +63,7 @@ public final class CarambolaSLF4JServiceProvider implements SLF4JServiceProvider
      * Create the CarambolaSLF4JServiceProvider service (called by the ServiceLoader)
      * @return a new CarambolaSLF4JServiceProvider
      */
+    @SuppressWarnings("unused")
     public static CarambolaSLF4JServiceProvider provider() {
         return new CarambolaSLF4JServiceProvider();
     }
