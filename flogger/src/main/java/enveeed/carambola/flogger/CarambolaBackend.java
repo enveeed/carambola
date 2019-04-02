@@ -20,12 +20,13 @@ package enveeed.carambola.flogger;
 import com.google.common.flogger.backend.LogData;
 import com.google.common.flogger.backend.LoggerBackend;
 import enveeed.carambola.Carambola;
+import enveeed.carambola.CarambolaApi;
 
 import java.util.logging.Level;
 
 public final class CarambolaBackend extends LoggerBackend {
 
-    private final Carambola carambola = Carambola.get();
+    private final CarambolaApi api = Carambola.get();
 
     private final String name;
 
@@ -44,12 +45,12 @@ public final class CarambolaBackend extends LoggerBackend {
 
     @Override
     public boolean isLoggable(Level lvl) {
-        return lvl.intValue() >= carambola.getLevel();
+        return lvl.intValue() >= api.level();
     }
 
     @Override
     public void log(LogData data) {
-        this.carambola
+        this.api
                 .log(FloggerStatement.of(data));
     }
 
