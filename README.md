@@ -76,7 +76,9 @@ from different logging APIs to carambola and make sure that they are as uniform 
 Handlers also include filtering, which enables you to for example only log severe errors with
 one handler, but everything with another, and so on. 
 
-## Configuration
+## Usage
+
+### Configuration
 
 Configuration is done via a *configuration script* written in a **Kotlin DSL**. 
 This allows you to include both declarative elements and functional ones in the configuration
@@ -142,6 +144,31 @@ carambola {
       - `filter...()` - various filter methods to add standard filters
   - `level(level: Int)` - global level filter, to limit all level output before it reaches the handlers. 
   (Useful for APIs which rely on this for speed benefits, e.g. Flogger)
+
+### Setup
+
+To use carambola in your project, you need to call `Carambola.init(...)` at the start
+of the program. Any logging statements before that will not be able to be handled by carambola
+or will be no-op. After carambola was initialized, every adapted logging APIs output will happen
+via carambola.
+
+**Example**
+
+```Java
+
+import enveeed.carambola.*;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        Carambola.init(); // use the simplest default initializer
+        
+        // ...
+    }
+}
+
+```
 
 ## License
 
