@@ -39,7 +39,13 @@ public abstract class CarambolaApi {
 
     static CarambolaApi getConfigured(Configuration configuration) {
         Objects.requireNonNull(configuration);
-        return new ConfiguredApi(configuration.getAdapters(), configuration.getHandlers(), configuration.getLevel());
+
+        Set<Adapter> adapters = Collections.unmodifiableSet(configuration.getAdapters());
+        Set<Handler> handlers = Collections.unmodifiableSet(configuration.getHandlers());
+
+        for (Adapter adapter : adapters) adapter.initialize();
+
+        return new ConfiguredApi(adapters, handlers, configuration.getLevel());
     }
 
     // ===
