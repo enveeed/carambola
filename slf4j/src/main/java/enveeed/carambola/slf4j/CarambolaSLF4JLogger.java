@@ -24,13 +24,13 @@ import org.slf4j.helpers.MarkerIgnoringBase;
 /**
  * A SLF4J logger which redirects everything to Carambola.get().
  */
-public final class CarambolaSLFJLogger extends MarkerIgnoringBase {
+public final class CarambolaSLF4JLogger extends MarkerIgnoringBase {
 
     private final String name;
 
     // ===
 
-    CarambolaSLFJLogger(String name) {
+    CarambolaSLF4JLogger(String name) {
         this.name = name;
     }
 

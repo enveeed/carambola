@@ -28,6 +28,6 @@ public final class CarambolaLoggerFactory implements ILoggerFactory {
 
     @Override
     public Logger getLogger(String name) {
-        return new CarambolaSLFJLogger(name);
+        return new CarambolaSLF4JLogger(name);
     }
 }
