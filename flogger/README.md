@@ -1,7 +1,22 @@
 # carambola-flogger
 
 **`carambola-flogger`** provides a simple
-[Platform implementation](./src/main/java/enveeed/carambola/flogger/CarambolaPlatform.java) for the
+[Backend](./src/main/java/enveeed/carambola/flogger/CarambolaBackend.java) for the
 [Google Flogger](https://github.com/google/flogger) API.
 
-When on the classpath, the platform will automatically be used and will redirect all logging from Flogger to Carambola.
+# Configuration
+
+With `carambola-flogger` on the classpath, add the following to your `adapters` block in `carambola.kts`:
+
+```Kotlin
+
+import enveeed.carambola.flogger.dsl.*
+
+adapters {
+
+    // ... any other adapters
+    
+    useFlogger()
+    
+}
+```

@@ -18,23 +18,31 @@
 package enveeed.carambola.flogger;
 
 import com.google.common.flogger.backend.LoggerBackend;
-import com.google.common.flogger.backend.Platform;
-import com.google.common.flogger.backend.system.StackBasedCallerFinder;
+import com.google.common.flogger.backend.system.BackendFactory;
 
-public final class CarambolaPlatform extends Platform {
+import javax.annotation.Nonnull;
+
+public final class CarambolaBackendFactory extends BackendFactory {
+    private CarambolaBackendFactory() {}
+
+    private static final CarambolaBackendFactory factory = new CarambolaBackendFactory();
+
+    // ===
 
     @Override
-    protected LogCallerFinder getCallerFinderImpl() {
-        return StackBasedCallerFinder.getInstance();
+    public LoggerBackend create(String loggingClassName) {
+        return new CarambolaBackend(loggingClassName);
     }
 
-    @Override
-    protected LoggerBackend getBackendImpl(String className) {
-        return new CarambolaLoggerBackend(className);
-    }
+    // ===
 
-    @Override
-    protected String getConfigInfoImpl() {
-        return "platform: " + "CarambolaPlatform" + "\n";
+    /**
+     * Getter method for {@link com.google.common.flogger.backend.system.DefaultPlatform}.
+     * @return the backend factory.
+     */
+    @Nonnull
+    @SuppressWarnings("unused")
+    public static CarambolaBackendFactory get() {
+        return factory;
     }
 }

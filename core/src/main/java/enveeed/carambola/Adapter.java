@@ -18,9 +18,19 @@
 package enveeed.carambola;
 
 /**
- * An adapter for translating log statements from any logging API to carambola.
+ * An <b>Adapter</b> translates log statements from a logging API
+ * into carambola statements, ensuring that they are uniform and delivers
+ * them to carambola.
+ * <p/>
+ * Adapters should not be active before {@link #initialize()} is called,
+ * to allow dynamic configuration.
  */
 public interface Adapter {
 
+    /**
+     * Initialize this adapter. After this method returns,
+     * the adapter should continuously provide all logging statements
+     * from its API to carambola.
+     */
     void initialize();
 }

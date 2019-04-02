@@ -23,7 +23,7 @@ import enveeed.carambola.Carambola;
 
 import java.util.logging.Level;
 
-public final class CarambolaLoggerBackend extends LoggerBackend {
+public final class CarambolaBackend extends LoggerBackend {
 
     private final Carambola carambola = Carambola.get();
 
@@ -31,7 +31,7 @@ public final class CarambolaLoggerBackend extends LoggerBackend {
 
     // ===
 
-    CarambolaLoggerBackend(String name) {
+    CarambolaBackend(String name) {
         this.name = name;
     }
 

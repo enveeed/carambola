@@ -26,6 +26,7 @@ import enveeed.carambola.Statement;
 import java.time.Instant;
 import java.util.Optional;
 
+@Deprecated // TODO replace with statement instance, rather than subclass.
 public final class FloggerStatement implements Statement {
 
     private final LogData data;

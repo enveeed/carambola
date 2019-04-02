@@ -19,10 +19,26 @@ package enveeed.carambola.flogger;
 
 import enveeed.carambola.Adapter;
 
+import java.util.Properties;
+
+/**
+ * {@link Adapter} for Google Flogger.
+ */
 public final class FloggerAdapter implements Adapter {
+    public FloggerAdapter() {}
+
+    private final static String BACKEND_FACTORY_CLASS = "enveeed.carambola.flogger.CarambolaBackendFactory#get";
+
+    // ===
 
     @Override
     public void initialize() {
 
+        Properties properties = System.getProperties();
+
+        // set the backend factory
+        properties.setProperty("flogger.backend_factory", BACKEND_FACTORY_CLASS);
+
+        // initialization completed.
     }
 }

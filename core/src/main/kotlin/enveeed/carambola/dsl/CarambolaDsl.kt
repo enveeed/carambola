@@ -78,6 +78,18 @@ class HandlerBlock(executor: HandlerExecutor) {
         filter(Filter(filter))
     }
 
+    // === BUILT-IN FILTERS ===
+
+    fun filterLevel(level: Int) {
+        filter {
+            level >= this.level
+        }
+    }
+
+    fun filterLevel(level: Level) {
+        filterLevel(level.intValue())
+    }
+
     // ===
 
     fun build(): Handler {
