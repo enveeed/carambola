@@ -1,6 +1,7 @@
 language: java
 jdk: oraclejdk11
-script: "./gradlew clean build -Pkotlin.useFallbackCompilerSearch=true"
+install: "./gradlew clean assemble -Pkotlin.useFallbackCompilerSearch=true"
+script: "./gradlew check -Pkotlin.useFallbackCompilerSearch=true"
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
