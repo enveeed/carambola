@@ -29,6 +29,8 @@ plugins {
     kotlin("jvm") version "1.3.21"
 }
 
+tasks.findByName("jar")!!.enabled = false
+
 subprojects {
 
     apply(plugin = "java")
