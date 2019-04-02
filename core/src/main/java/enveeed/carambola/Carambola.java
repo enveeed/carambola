@@ -63,7 +63,7 @@ public final class Carambola {
     /**
      * The default script file name to look for at the classpath root.
      */
-    private static final String DEFAULT_SCRIPT_FILE_NAME = "carambola.kts";
+    private static final String DEFAULT_SCRIPT_FILE_NAME = "/carambola.kts";
 
     // ===
 
