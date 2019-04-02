@@ -15,11 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package enveeed.carambola.jul;
-
-import java.util.logging.LogManager;
-
-public class CarambolaLogManager extends LogManager {
-
-
+dependencies {
+    implementation(project(":carambola-core"))
 }

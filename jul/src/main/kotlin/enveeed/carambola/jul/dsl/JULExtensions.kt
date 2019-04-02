@@ -15,8 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id 'java'
-    id 'idea'
-    id 'java-library'
+package enveeed.carambola.jul.dsl
+
+import enveeed.carambola.dsl.AdaptersBlock
+import enveeed.carambola.jul.JULAdapter
+
+// === ADAPTERS ===
+
+fun AdaptersBlock.useJUL() {
+    adapter(JULAdapter())
 }

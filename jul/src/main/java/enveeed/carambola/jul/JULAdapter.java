@@ -17,14 +17,22 @@
 
 package enveeed.carambola.jul;
 
-import java.util.logging.Logger;
+import enveeed.carambola.Adapter;
 
-public class CarambolaLoggerAdapter extends Logger {
+import java.util.logging.LogManager;
 
-    protected CarambolaLoggerAdapter(String name, String resourceBundleName) {
-        super(name, resourceBundleName);
+/**
+ * An {@link enveeed.carambola.Adapter} for JUL.
+ */
+public final class JULAdapter implements Adapter {
+
+    @Override
+    public void initialize() {
+
+        // set the redirecting handler
+        CarambolaJULHandler julHandler = new CarambolaJULHandler();
+
+        LogManager.getLogManager().getLogger("")    // ("") is the root logger
+                .addHandler(julHandler);
     }
-
-    // TODO NO-OP
-
 }
