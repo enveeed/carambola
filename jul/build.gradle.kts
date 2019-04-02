@@ -17,4 +17,8 @@
 
 dependencies {
     implementation(project(":carambola-core"))
+
+    // Unit Testing
+    testImplementation( group = "org.junit.jupiter", name = "junit-jupiter-api",    version = "5.4.1") // JUnit API
+    testRuntime(        group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.4.1") // JUnit Engine
 }

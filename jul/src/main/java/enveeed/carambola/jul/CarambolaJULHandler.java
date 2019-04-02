@@ -17,6 +17,8 @@
 
 package enveeed.carambola.jul;
 
+import enveeed.carambola.Carambola;
+
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -30,7 +32,7 @@ public final class CarambolaJULHandler extends Handler {
 
     @Override
     public void publish(LogRecord record) {
-
+        Carambola.get().log(new JULStatement(record));
     }
 
     //

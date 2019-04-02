@@ -15,35 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package enveeed.carambola.jul;
+import enveeed.carambola.dsl.carambola
+import enveeed.carambola.jul.JULIT
+import enveeed.carambola.jul.dsl.useJUL
 
-import enveeed.carambola.Adapter;
+carambola {
 
-import java.util.logging.Handler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-/**
- * An {@link enveeed.carambola.Adapter} for JUL.
- */
-public final class JULAdapter implements Adapter {
-
-    @Override
-    public void initialize() {
-
-        Logger root = getRootLogger();
-
-        // remove standard handlers
-        for (Handler handler : root.getHandlers()) root.removeHandler(handler);
-
-        // add the redirecting handler
-        CarambolaJULHandler julHandler = new CarambolaJULHandler();
-        root.addHandler(julHandler);
+    adapters {
+        useJUL()
     }
 
-    // ===
-
-    private static Logger getRootLogger() {
-        return LogManager.getLogManager().getLogger("");
+    handlers {
+        handler(JULIT.handler)
     }
+
 }

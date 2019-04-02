@@ -30,6 +30,7 @@ plugins {
 }
 
 tasks.findByName("jar")!!.enabled = false
+tasks.findByName("bintrayUpload")!!.enabled = false // only upload sub-projects
 
 subprojects {
 
