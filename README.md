@@ -16,6 +16,7 @@ carambola provides implementations for the following logging APIs or facades:
 | --- | --- | --- |
 | [Flogger][ref_flogger] | `carambola-flogger` |   |
 | [SLF4J][ref_slf4j] | `carambola-slf4j` | SLF4J versions `1.8+`, currently always active when on the classpath. |
+| [JUL][ref_jul] | `carambola-jul` |  |
 
 `carambola-core` is always required.
 
