@@ -22,6 +22,7 @@ import com.google.common.flogger.backend.system.BackendFactory;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("unused")
 public final class CarambolaBackendFactory extends BackendFactory {
     private CarambolaBackendFactory() {}
 

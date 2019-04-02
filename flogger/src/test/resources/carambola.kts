@@ -1,3 +1,7 @@
+import enveeed.carambola.dsl.carambola
+import enveeed.carambola.flogger.FloggerIT
+import enveeed.carambola.flogger.dsl.useFlogger
+
 /*
  * Copyright (c) 2019 Arthur Schüler / enveeed (https://github.com/enveeed)
  *
@@ -15,16 +19,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-dependencies {
-    implementation(project(":carambola-core"))
-    implementation(group = "com.google.flogger", name = "flogger", version = "0.3.1")
-    implementation(group = "com.google.flogger", name = "flogger-system-backend", version = "0.3.1")
+carambola {
 
-    // Unit Testing
-    testImplementation( group = "org.junit.jupiter", name = "junit-jupiter-api",    version = "5.4.1") // JUnit API
-    testRuntime(        group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.4.1") // JUnit Engine
-}
+    adapters {
+        useFlogger()
+    }
 
-delegateClosureOf<Test> { 
-    useJUnitPlatform()
+    handlers {
+        handler(FloggerIT.handler)
+    }
+
 }
