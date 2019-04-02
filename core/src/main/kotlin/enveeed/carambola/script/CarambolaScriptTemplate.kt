@@ -15,20 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// carambola configuration script for TESTING ONLY
-carambola {
+package enveeed.carambola.script
 
-    handlers {
-        handler(StandardHandler())
-        handler({
-            System.err.println(this)
-        }) {
-            filter {
-                this.level >= Level.SEVERE.intValue()
-            }
-        }
-    }
+import javax.script.Bindings
+import kotlin.script.templates.ScriptTemplateDefinition
+import kotlin.script.templates.standard.ScriptTemplateWithBindings
 
-    level(Level.FINE)
-
-}
+@Suppress("unused") // Used in CarambolaScriptEngineFactory via class name
+@ScriptTemplateDefinition(resolver = CarambolaDependenciesResolver::class)
+abstract class CarambolaScriptTemplate(jsr223Bindings: Bindings) : ScriptTemplateWithBindings(jsr223Bindings)

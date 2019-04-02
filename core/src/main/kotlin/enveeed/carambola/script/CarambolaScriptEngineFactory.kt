@@ -27,18 +27,19 @@ import javax.script.ScriptContext
 import javax.script.ScriptEngine
 import kotlin.script.experimental.jvm.util.KotlinJars
 
-const val TEMPLATE_CLASS: String = "org.jetbrains.kotlin.script.jsr223.KotlinStandardJsr223ScriptTemplate"
 
 @Suppress("unused") // This is used in a service file in META-INF
 class CarambolaScriptEngineFactory : KotlinJsr223JvmScriptEngineFactoryBase() {
 
     override fun getScriptEngine(): ScriptEngine {
 
+        val templateClass = "enveeed.carambola.script.CarambolaScriptTemplate"
+
         // assemble the classpath for the kotlin script
         val graph = ClassGraph()
 
         graph.whitelistPackages("enveeed.carambola")
-        graph.whitelistClasses(TEMPLATE_CLASS)
+        graph.whitelistClasses(templateClass)
 
         val classpath = mutableSetOf<File>()
         graph.scan().use {
@@ -60,7 +61,7 @@ class CarambolaScriptEngineFactory : KotlinJsr223JvmScriptEngineFactoryBase() {
         return KotlinJsr223JvmLocalScriptEngine(
                 this,
                 classpath.toList(),
-                TEMPLATE_CLASS,
+                templateClass,
                 { ctx, types ->
                     ScriptArgsWithTypes(arrayOf(ctx.getBindings(ScriptContext.ENGINE_SCOPE)), types ?: emptyArray())
                 },

@@ -34,4 +34,12 @@ class CarambolaTest {
 
         assertNotNull(engine);
     }
+
+    @Test
+    void testInit() {
+
+        Carambola instance = Carambola.get();
+
+        assertNotNull(instance);
+    }
 }
