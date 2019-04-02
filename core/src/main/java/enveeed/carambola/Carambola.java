@@ -21,184 +21,158 @@ import enveeed.carambola.dsl.Configuration;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Objects;
 
+/**
+ * Carambola main class.
+ * @see #init()
+ * @see #init(Path)
+ * @see #init(String)
+ * @see #init(Configuration)
+ * @see #get()
+ */
 public final class Carambola {
-
-    private static Carambola carambola = null;
-
-    // ===
-
     private Carambola() {}
 
     // ===
 
-    public static Carambola get() {
-        if(carambola == null) {
-            carambola = new Carambola();
+    private static CarambolaApi api = null;
 
-            // attempt to load a configuration script
-            carambola.attemptDSLConfiguration();
-        }
-        return carambola;
+    // ===
+
+    /**
+     * Get the global carambola API instance.
+     * If carambola was not initialized yet, a no-op instance
+     * will be returned instead. This method should be used by adapters to
+     * obtain the API instance.
+     * @return the carambola API
+     */
+    public static CarambolaApi get() {
+        if(api == null) return CarambolaApi.getNoOp();
+        else return api;
     }
 
     // ===
 
     /**
-     * The expected file name for the configuration script, if existent.
+     * The default script file name to look for at the classpath root.
      */
-    private final static String CONFIGURATION_SCRIPT = "carambola.kts";
+    private static final String DEFAULT_SCRIPT_FILE_NAME = "carambola.kts";
 
     // ===
 
     /**
-     * Lock for configuration changes.
+     * Initialize carambola using the given configuration.
+     * @param configuration the configuration
+     * @throws CarambolaInitException if carambola could not be correctly initialized
      */
-    private final ReentrantLock configurationLock = new ReentrantLock();
+    public static void init(Configuration configuration) throws CarambolaInitException {
+        Objects.requireNonNull(configuration);
+        ensureNotInitialized();
 
-    //
+        //
 
-    /**
-     * All currently active adapters.
-     */
-    private final Set<Adapter> adapters = new HashSet<>();
-
-    /**
-     * All currently active handlers.
-     */
-    private final Set<Handler> handlers = new HashSet<>();
-
-    /**
-     * The global minimum level for pre-filtering
-     */
-    private int level = Integer.MIN_VALUE;
-
-    // === CONFIGURATION ===
-
-    /**
-     * Update carambola to use the given DSL configuration, replacing
-     * the current one.
-     * @param configuration the DSL configuration
-     */
-    public void apply(Configuration configuration) {
-
-        configurationLock.lock();
-
-        try {
-
-            this.applyAdapters(configuration);
-            this.applyHandlers(configuration);
-
-        } finally {
-            configurationLock.unlock();
-        }
+        api = CarambolaApi.getConfigured(configuration);
     }
 
-    //
-
-    private void applyAdapters(Configuration configuration) {
-
-        Set<Adapter> adapters = configuration.getAdapters();
-
-        for (Adapter adapter : adapters) {
-            if(this.adapters.contains(adapter)) continue;
-
-            adapter.initialize();
-
-            this.adapters.add(adapter);
-        }
-    }
-
-    private void applyHandlers(Configuration configuration) {
-
-        Set<Handler> handlers = configuration.getHandlers();
-
-        this.handlers.addAll(handlers);
-    }
-
-    private void applyLevel(Configuration configuration) {
-
-        this.level = configuration.getLevel();
-    }
-
-    // === LOG ===
-
     /**
-     * Log the given statement.
-     * @param statement the statement.
+     * Initialize carambola using the given configuration script.
+     * @param configurationScript the configuration script
+     * @throws CarambolaInitException if carambola could not be correctly initialized
      */
-    public void log(Statement statement) {
-        for (Handler handler : this.handlers) handler.handle(statement);
-    }
-
-    // === DSL ===
-
-    /**
-     * Attempt to apply a {@link Configuration} from {@link #CONFIGURATION_SCRIPT}.
-     */
-    private void attemptDSLConfiguration() {
-
-        // attempt to find the configuration script
-
-        InputStream input = ClassLoader.getSystemClassLoader()
-                .getResourceAsStream(CONFIGURATION_SCRIPT);
-
-        if(input == null) return; // TODO warn that there is no configuration script
-
-        byte[] content;
-
-        try {
-            content = input.readAllBytes();
-        } catch (Exception e) {
-            // TODO this is an internal error and should be
-            //  logged because it means that the file could not be read correctly
-            e.printStackTrace();
-            return;
-        }
-
-        // TODO document that configuration scripts are expected to be UTF-8
-        String script = new String(content, StandardCharsets.UTF_8);
-
-        // load the kotlin script engine
+    public static void init(String configurationScript) throws CarambolaInitException {
+        Objects.requireNonNull(configurationScript);
+        ensureNotInitialized();
 
         ScriptEngine engine = new ScriptEngineManager(Thread.currentThread().getContextClassLoader())
                 .getEngineByExtension("kts");
 
-        if(engine == null) throw new IllegalStateException("No engine.");
+        if(engine == null) throw new CarambolaInitException("Kotlin script engine was unavailable." +
+                "Are all carambola dependencies and service definitions on the classpath?");
 
-        // execute the script and get the configuration object
-
-        Configuration configuration;
+        Object result;
 
         try {
-            configuration = (Configuration) engine.eval(script);
-        } catch (Exception e) {
-            // TODO warn that the configuration script was invalid.
-            e.printStackTrace();
-            return;
+            result = engine.eval(configurationScript);
+        } catch (ScriptException e) {
+            throw new CarambolaInitException("Invalid configuration script!", e);
         }
 
-        // apply the configuration
+        if(!(result instanceof Configuration))
+            throw new CarambolaInitException("Configuration script returned invalid configuration, is it valid? Type was " +
+                    (result == null ? "(result was null)" : result.getClass().getName()));
 
-        this.apply(configuration);
+        Configuration configuration = (Configuration) result;
+
+        //
+
+        init(configuration);
     }
 
-    // ===
+    /**
+     * Initialize carambola using the configuration script at the given path.
+     * @param configurationScriptFile the configuration script file path
+     * @throws CarambolaInitException if carambola could not be correctly initialized
+     */
+    public static void init(Path configurationScriptFile) throws CarambolaInitException {
+        Objects.requireNonNull(configurationScriptFile);
+        ensureNotInitialized();
 
-    public Set<Adapter> getAdapters() {
-        return Set.copyOf(this.adapters);
+        byte[] data;
+
+        try {
+            data = Files.readAllBytes(configurationScriptFile);
+        } catch (IOException e) {
+            throw new CarambolaInitException("Failed to read configuration script file!", e);
+        }
+
+        String script = new String(data, StandardCharsets.UTF_8);
+
+        //
+
+        init(script);
     }
 
-    public Set<Handler> getHandlers() {
-        return Set.copyOf(this.handlers);
+    //
+
+    /**
+     * Initialize carambola using the default configuration script at the root
+     * of the classpath.
+     * @throws CarambolaInitException if carambola could not be correctly initialized
+     */
+    public static void init() throws CarambolaInitException {
+        ensureNotInitialized();
+
+        InputStream stream = Carambola.class.getResourceAsStream(DEFAULT_SCRIPT_FILE_NAME);
+
+        if(stream == null)
+            throw new CarambolaInitException("Default carambola configuration script not found: " + DEFAULT_SCRIPT_FILE_NAME);
+
+        byte[] data;
+
+        try {
+            data = stream.readAllBytes();
+        } catch (IOException e) {
+            throw new CarambolaInitException("Failed to read configuration script file!", e);
+        }
+
+        String script = new String(data, StandardCharsets.UTF_8);
+
+        //
+
+        init(script);
     }
 
-    public int getLevel() {
-        return this.level;
+    //
+
+    private static void ensureNotInitialized() throws CarambolaInitException {
+        if(api != null) throw new CarambolaInitException("carambola was already initialized!");
     }
+
 }
