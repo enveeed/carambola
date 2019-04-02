@@ -17,12 +17,22 @@
 
 import enveeed.carambola.dsl.*
 import enveeed.carambola.handlers.StandardHandler
+import java.util.logging.Level
 
 // carambola configuration script for TESTING ONLY
 carambola {
 
     handlers {
         handler(StandardHandler())
+        handler({
+            System.err.println(this)
+        }) {
+            filter {
+                this.level >= Level.SEVERE.intValue()
+            }
+        }
     }
+
+    level(Level.FINE)
 
 }

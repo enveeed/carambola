@@ -19,6 +19,8 @@ dependencies {
     implementation(kotlin("script-runtime"))
     implementation(kotlin("script-util"))
 
+    implementation(group = "io.github.classgraph", name = "classgraph", version = "4.8.22")
+
     // Unit Testing
     testImplementation( group = "org.junit.jupiter", name = "junit-jupiter-api",    version = "5.3.2") // JUnit API
     testRuntime(        group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "5.3.2") // JUnit Engine

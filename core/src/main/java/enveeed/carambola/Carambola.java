@@ -169,6 +169,8 @@ public final class Carambola {
         ScriptEngine engine = new ScriptEngineManager(Thread.currentThread().getContextClassLoader())
                 .getEngineByExtension("kts");
 
+        if(engine == null) throw new IllegalStateException("No engine.");
+
         // execute the script and get the configuration object
 
         Configuration configuration;

@@ -17,26 +17,21 @@
 
 package enveeed.carambola;
 
+import enveeed.carambola.script.CarambolaScriptEngineFactory;
 import org.junit.jupiter.api.Test;
+
+import javax.script.ScriptEngine;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarambolaTest {
 
     @Test
-    void testInit() {
+    void test() {
 
-        Carambola instance = assertDoesNotThrow(Carambola::get);
-        assertNotNull(instance);
+        ScriptEngine engine = assertDoesNotThrow(() -> new CarambolaScriptEngineFactory()
+                .getScriptEngine());
 
-    }
-
-    @Test
-    void testDSLHandlerCount() {
-
-        Carambola instance = Carambola.get();
-
-        assertEquals(instance.getHandlers().size(), 1);
-
+        assertNotNull(engine);
     }
 }
