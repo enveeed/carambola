@@ -1,8 +1,5 @@
 ![version](https://img.shields.io/badge/dynamic/json.svg?color=%23AFB42B&label=latest&query=name&style=flat-square&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fenveeed%2Fcarambola%2Fcarambola-core%2Fversions%2F_latest&link=https://bintray.com/enveeed/carambola)
 
-> **NOTE:** This is not intended to be used in projects as of right now, since it's basically just a stub.
-> If you want to use it in your own projects, please consider waiting for a complete (non`-beta`) release.
-
 # carambola
 
 **carambola** is a logging aggregator for multiple different logging APIs and facades, 
@@ -17,8 +14,7 @@ carambola provides implementations for the following logging APIs or facades:
 | API | Module | Notes |
 | --- | --- | --- |
 | [Flogger][ref_flogger] | `carambola-flogger` |   |
-| [SLF4J][ref_slf4j] | `carambola-slf4j` | Includes support for both pre-`1.8` APIs and `1.8+` APIs |
-| [JUL][ref_jul] | `carambola-jul` | **NOT SUPPORTED YET** |
+| [SLF4J][ref_slf4j] | `carambola-slf4j` | SLF4J versions `1.8+`, currently always active when on the classpath. |
 
 `carambola-core` is always required.
 
@@ -81,7 +77,7 @@ one handler, but everything with another, and so on.
 
 ## Configuration
 
-Configuration is done via a *configuration script* written in **Kotlin**. 
+Configuration is done via a *configuration script* written in a **Kotlin DSL**. 
 This allows you to include both declarative elements and functional ones in the configuration
 and enables you to use Java and Kotlin both to full capacity in the configuration, for example
 when adding custom handlers or adapters.
@@ -92,49 +88,59 @@ configure it from your application.
 
 ---
 
+The script has the following **implicit imports**, 
+that means you do not have to add those imports for the script to work:
+
+- `enveeed.carambola.*`
+- `enveeed.carambola.dsl.*`
+- `enveeed.carambola.handlers.*`
+- `enveeed.carambola.filters.*`
+- `java.util.logging.*`
+
+Note that due to performance reasons, 
+**only the carambola classes and Kotlin standard libraries are on the classpath** for the script. 
+
+---
+
 **Example `carambola.kts`**
 ```Kotlin
-import enveeed.carambola.dsl.*
-import java.util.logging.Level
 
-// This is an example "carambola.kts" configuration script file.
 carambola {
 
-    // Adapters are configured in the "adapters" block.
     adapters {
 
         // useFlogger() // for carambola-flogger
         // useSLF4J() // for carambola-slf4j
     }
 
-    // Handlers are configured in the "handlers" block.
     handlers {
 
-        // Handlers are added by calling handler(...)
         handler({
-
-            // This is a lambda which acts as a HandlerExecutor, printing the statement to STDOUT
             System.out.println(this.content)
-
         }) {
-
-            // This is the handler configuration block.
-
-            // Filters are added by calling filter(...)
             filter {
-                // This is a lambda which acts as a Filter, filtering all statements which have level below 100.
                 this.level >= 100
             }
-
         }
     }
 
-    // general minimum level, filtered out before it reaches any handler.
-    // e.g. useful for pre-filtering APIs like Google Flogger as it provides a speed benefit
-    level(Level.INFO)
+    level(50)
 
 }
 ```
+
+**Syntax**
+
+- `carambola {}` - Main configuration block, includes all configuration.
+  - `adapters {}` - Adapters configuration block, all adapters are added here.
+    - `adapter(adapter: Adapter)` - add an adapter
+    - `use...()` - extension functions provided by carambola modules to make adding their adapters easier.
+  - `handlers {}` - Handlers configuration block, all handlers are added here.
+    - `handler(executor: HandlerExecutor) {}` - Handler configuration block / function, adds a handler.
+      - `filter(filter: Filter)` - add a filter to the handler
+      - `filter...()` - various filter methods to add standard filters
+  - `level(level: Int)` - global level filter, to limit all level output before it reaches the handlers. 
+  (Useful for APIs which rely on this for speed benefits, e.g. Flogger)
 
 ## License
 
