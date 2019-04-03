@@ -1,5 +1,9 @@
-![version](https://img.shields.io/badge/dynamic/json.svg?color=%23AFB42B&label=latest&query=name&style=flat-square&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fenveeed%2Fcarambola%2Fcarambola-core%2Fversions%2F_latest&link=https://bintray.com/enveeed/carambola)
-![build](https://img.shields.io/travis/com/enveeed/carambola.svg?style=flat-square)
+[![version][ref_badge_version]](https://bintray.com/enveeed/carambola)
+[![build][ref_badge_build]](https://travis-ci.com/enveeed/carambola/)
+
+
+[ref_badge_version]: https://img.shields.io/badge/dynamic/json.svg?color=%23AFB42B&label=latest&query=name&style=flat-square&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fenveeed%2Fcarambola%2Fcarambola-core%2Fversions%2F_latest
+[ref_badge_build]: https://img.shields.io/travis/com/enveeed/carambola.svg?style=flat-square
 
 # carambola
 
