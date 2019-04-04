@@ -76,6 +76,13 @@ subprojects {
 
     //
 
+    tasks.register<Jar>("sourcesJar") {
+        from(sourceSets.main.get().allJava)
+        archiveClassifier.set("sources")
+    }
+
+    //
+
     publishing {
         publications {
             create<MavenPublication>("maven") {
@@ -84,6 +91,7 @@ subprojects {
                 version = project.version.toString()
 
                 from(components["java"])
+                artifact(tasks["sourcesJar"])
             }
         }
     }
@@ -100,6 +108,7 @@ subprojects {
             name = project.name
             setLicenses("GPL-3.0")
             vcsUrl = "https://github.com/enveeed/carambola"
+            publish = true
 
             version(delegateClosureOf<BintrayExtension.VersionConfig> {
                 name = project.version.toString()
