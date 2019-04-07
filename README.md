@@ -30,7 +30,7 @@ carambola provides implementations for the following logging APIs or facades:
 
 ## Gradle
 
-carambola artifacts are hosted on [Bintray](https://bintray.com/enveeed/carambola), to query this repository
+carambola artifacts are hosted on [Bintray JCenter](https://bintray.com/bintray/jcenter), to query this repository
 add the following to your `repository` and `dependencies` block, respectively:
 
 > **NOTE:** You should always replace the `+` (latest) version with a manually configured one, otherwise
@@ -39,9 +39,7 @@ add the following to your `repository` and `dependencies` block, respectively:
 **Groovy DSL**
 ```Groovy
 repositories {
-    maven {
-        url 'https://dl.bintray.com/enveeed/carambola'
-    }
+    jcenter()
 }
 
 // ...
@@ -54,7 +52,7 @@ dependencies {
 **Kotlin DSL**
 ```Kotlin
 repositories {
-    maven("https://dl.bintray.com/enveeed/carambola")
+    jcenter()
 }
 
 // ...
