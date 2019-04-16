@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/l8KkBKE.png" width="150" />
+
 [![version][ref_badge_version]](https://bintray.com/enveeed/carambola)
 [![build][ref_badge_build]](https://travis-ci.com/enveeed/carambola/)
 
